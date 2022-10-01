@@ -8,10 +8,8 @@ pipeline {
                     image "gradle:7.5-jdk17"
                 }
             }
-            steps {
-                dir("src") {
-                    sh "gradle build --no-daemon"
-                }
+            steps {                
+                sh "gradle build --no-daemon"
             }
         }
         stage("Build Release") {
