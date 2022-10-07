@@ -7,6 +7,7 @@ import com.univates.vitaldonationapi.domain.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -28,8 +29,14 @@ public class UserController {
         return ResponseEntity.ok(UserMapper.map(service.findById(UUID.fromString(id))));
     }
 
-    @PreAuthorize(PROFILE_SUPER_USER)
+    @PreAuthorize(PROFILE_USER)
     @GetMapping
+    public ResponseEntity<UserDetail> findByUserLogged(@AuthenticationPrincipal String cpf) {
+        return ResponseEntity.ok(UserMapper.map(service.findByCpf(cpf)));
+    }
+
+    @PreAuthorize(PROFILE_SUPER_USER)
+    @GetMapping("/list")
     public ResponseEntity<List<UserDetail>> findAll() {
         return ResponseEntity.ok(service.findAll().stream().map(UserMapper::map).toList());
     }
@@ -40,6 +47,7 @@ public class UserController {
         return ResponseEntity.ok(UserMapper.map(service.create(user)));
     }
 
+    @PreAuthorize(PROFILE_USER)
     @PutMapping("/{id}")
     public ResponseEntity<UserDetail> update(@Valid @RequestBody UserDetail detail, @PathVariable String id) {
         var user = UserMapper.map(detail, id);
