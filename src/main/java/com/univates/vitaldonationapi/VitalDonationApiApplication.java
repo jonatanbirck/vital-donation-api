@@ -32,54 +32,22 @@ public class VitalDonationApiApplication {
 			var roleManager = roleService.create(new Role("MANAGER"));
 			var roleUser = roleService.create(new Role("USER"));
 
-			userService.create(
-				new User()
-					.withName("Super Usuário")
-					.withCpf("00000000191")
-					.withPassword("vamodale")
-					.withRoles(List.of(roleSuperAdmin))
-			);
-
-			userService.create(
-				new User()
-					.withName("Admin")
-					.withCpf("67141053042")
-					.withPassword("vamodale")
-					.withRoles(List.of(roleAdmin, roleUser))
-			);
-
-			userService.create(
-				new User()
-					.withName("Manager")
-					.withCpf("95012863046")
-					.withPassword("vamodale")
-					.withRoles(List.of(roleManager, roleUser))
-			);
-
-			userService.create(
-				new User()
-					.withName("Usuário 1")
-					.withCpf("59210776070")
-					.withPassword("vamodale")
-					.withRoles(List.of(roleUser))
-			);
-
-			userService.create(
-				new User()
-					.withName("Usuário 2")
-					.withCpf("91425230016")
-					.withPassword("vamodale")
-					.withRoles(List.of(roleUser))
-			);
-
-			userService.create(
-				new User()
-					.withName("Usuário 3")
-					.withCpf("81482146037")
-					.withPassword("vamodale")
-					.withRoles(List.of(roleUser))
-			);
+			createUser(userService, "Super Usuário", "00000000191", "vamodale", List.of(roleSuperAdmin));
+			createUser(userService, "Admin", "67141053042", "vamodale", List.of(roleAdmin, roleUser));
+			createUser(userService, "Manager", "95012863046", "vamodale", List.of(roleManager, roleUser));
+			createUser(userService, "Usuário 1", "59210776070", "vamodale", List.of(roleUser));
+			createUser(userService, "Usuário 2", "91425230016", "vamodale", List.of(roleUser));
+			createUser(userService, "Usuário 3", "81482146037", "vamodale", List.of(roleUser));
 		};
+	}
+
+	private static void createUser(UserService userService, String name, String cpf, String password, List<Role> roles) {
+		User user = new User();
+		user.setName(name);
+		user.setCpf(cpf);
+		user.setPassword(password);
+		user.setRoles(roles);
+		userService.create(user);
 	}
 
 }

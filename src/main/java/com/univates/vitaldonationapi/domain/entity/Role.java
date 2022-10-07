@@ -1,15 +1,12 @@
 package com.univates.vitaldonationapi.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.With;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.UUID;
 
-@With
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "roles")

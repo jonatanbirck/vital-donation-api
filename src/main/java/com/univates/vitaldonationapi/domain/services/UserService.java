@@ -4,6 +4,7 @@ import com.univates.vitaldonationapi.domain.entity.User;
 import com.univates.vitaldonationapi.domain.exception.model.UserAlreadyExistsException;
 import com.univates.vitaldonationapi.domain.exception.model.UserNotFoundException;
 import com.univates.vitaldonationapi.domain.repository.UserRepository;
+import com.univates.vitaldonationapi.helper.ConverterHelper;
 import com.univates.vitaldonationapi.helper.PropertyHelper;
 import com.univates.vitaldonationapi.helper.UserAuthHelper;
 import lombok.AllArgsConstructor;
@@ -35,7 +36,7 @@ public class UserService implements UserDetailsService {
     }
 
     public User findByCpf(String cpf) {
-        return userRepository.findByCpf(cpf).orElseThrow(UserNotFoundException::new);
+        return userRepository.findByCpf(ConverterHelper.maskCPF(cpf)).orElseThrow(UserNotFoundException::new);
     }
 
     public List<User> findAll() {
@@ -90,12 +91,12 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String cpf) throws UsernameNotFoundException {
-        return userRepository.findByCpf(cpf).map(UserAuthHelper::map)
+        return userRepository.findByCpf(ConverterHelper.maskCPF(cpf)).map(UserAuthHelper::map)
                 .orElseThrow(() -> new UserNotFoundException("user not found"));
     }
 
     private void verifyIfExists(String cpf) {
-        userRepository.findByCpf(cpf).ifPresent(user -> {throw new UserAlreadyExistsException(user);});
+        userRepository.findByCpf(ConverterHelper.maskCPF(cpf)).ifPresent(user -> {throw new UserAlreadyExistsException(user);});
     }
 
 }

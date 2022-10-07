@@ -1,6 +1,7 @@
 package com.univates.vitaldonationapi.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.univates.vitaldonationapi.helper.ConverterHelper;
 import lombok.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -13,7 +14,6 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@With
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "users")
@@ -105,6 +105,10 @@ public class User {
 
     public Collection<SimpleGrantedAuthority> mapRolesToSimpleGrantedAuthority() {
         return this.roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).toList();
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = ConverterHelper.maskCPF(cpf);
     }
 
 }
