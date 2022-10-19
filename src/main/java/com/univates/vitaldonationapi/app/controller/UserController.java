@@ -22,36 +22,37 @@ import static com.univates.vitaldonationapi.domain.security.UserAuthority.*;
 public class UserController {
 
     private final UserService service;
+    private final UserMapper userMapper;
 
     @PreAuthorize(PROFILE_MANAGER)
     @GetMapping("/{id}")
     public ResponseEntity<UserDetail> findById(@PathVariable String id) {
-        return ResponseEntity.ok(UserMapper.map(service.findById(UUID.fromString(id))));
+        return ResponseEntity.ok(userMapper.map(service.findById(UUID.fromString(id))));
     }
 
     @PreAuthorize(PROFILE_USER)
     @GetMapping
     public ResponseEntity<UserDetail> findByUserLogged(@AuthenticationPrincipal String cpf) {
-        return ResponseEntity.ok(UserMapper.map(service.findByCpf(cpf)));
+        return ResponseEntity.ok(userMapper.map(service.findByCpf(cpf)));
     }
 
     @PreAuthorize(PROFILE_SUPER_USER)
     @GetMapping("/list")
     public ResponseEntity<List<UserDetail>> findAll() {
-        return ResponseEntity.ok(service.findAll().stream().map(UserMapper::map).toList());
+        return ResponseEntity.ok(service.findAll().stream().map(userMapper::map).toList());
     }
 
     @PostMapping
     public ResponseEntity<UserDetail> create(@Valid @RequestBody UserForm form) {
-        var user = UserMapper.map(form);
-        return ResponseEntity.ok(UserMapper.map(service.create(user)));
+        var user = userMapper.map(form);
+        return ResponseEntity.ok(userMapper.map(service.create(user)));
     }
 
     @PreAuthorize(PROFILE_USER)
     @PutMapping("/{id}")
     public ResponseEntity<UserDetail> update(@Valid @RequestBody UserDetail detail, @PathVariable String id) {
-        var user = UserMapper.map(detail, id);
-        return ResponseEntity.ok(UserMapper.map(service.update(user)));
+        var user = userMapper.map(detail, id);
+        return ResponseEntity.ok(userMapper.map(service.update(user)));
     }
 
     @PreAuthorize(PROFILE_SUPER_USER)

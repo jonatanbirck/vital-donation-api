@@ -52,6 +52,14 @@ public class UserDetail {
 
     private Collection<Role> roles;
 
+    public Integer getWeightInteger() {
+        return weight;
+    }
+
+    public Short getHeightShort() {
+        return height;
+    }
+
     public Double getWeight() {
         if (Objects.isNull(weight)) return null;
         return ConverterHelper.toKilos(weight);

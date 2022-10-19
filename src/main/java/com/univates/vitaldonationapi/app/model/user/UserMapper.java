@@ -1,36 +1,21 @@
 package com.univates.vitaldonationapi.app.model.user;
 
 import com.univates.vitaldonationapi.domain.entity.User;
-import com.univates.vitaldonationapi.helper.PropertyHelper;
+import org.mapstruct.*;
 
-import java.util.UUID;
+@Mapper(componentModel="spring",
+        unmappedTargetPolicy = ReportingPolicy.IGNORE)
+public interface UserMapper {
 
-public class UserMapper {
+    User map(UserForm form);
 
-    private UserMapper() {
-        throw new IllegalStateException("Utility class");
-    }
-
-    public static User map(UserForm form) {
-        var user = new User();
-        PropertyHelper.copy(form, user);
-        return user;
-    }
-
-    public static User map(UserDetail detail, String id) {
-        var user = new User();
-        PropertyHelper.copy(detail, user);
-        user.setId(UUID.fromString(id));
-        return user;
-    }
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "weight", source = "detail.weightInteger")
+    @Mapping(target = "height", source = "detail.heightShort")
+    User map(UserDetail detail, String id);
 
 
-    public static UserDetail map(User user) {
-        var detail = new UserDetail();
-        PropertyHelper.copy(user, detail);
-        detail.setPassword(null);
-        return detail;
-    }
-
+    @Mapping(target = "password", ignore = true)
+    UserDetail map(User user);
 
 }
