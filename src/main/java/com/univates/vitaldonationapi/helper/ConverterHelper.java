@@ -10,11 +10,11 @@ public class ConverterHelper {
     }
 
     public static double toKilos(int grams) {
-        return (grams / 1000);
+        return (double) grams / 1000;
     }
 
     public static double toMeters(short centimeters) {
-        return (centimeters / 100);
+        return (double) centimeters / 100;
     }
 
     public static String maskCPF(String cpf) {

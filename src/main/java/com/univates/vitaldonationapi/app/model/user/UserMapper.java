@@ -14,7 +14,6 @@ public interface UserMapper {
     @Mapping(target = "height", source = "detail.heightShort")
     User map(UserDetail detail, String id);
 
-
     @Mapping(target = "password", ignore = true)
     UserDetail map(User user);
 

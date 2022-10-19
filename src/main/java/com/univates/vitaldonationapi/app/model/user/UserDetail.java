@@ -52,10 +52,12 @@ public class UserDetail {
 
     private Collection<Role> roles;
 
+    @JsonIgnore
     public Integer getWeightInteger() {
         return weight;
     }
 
+    @JsonIgnore
     public Short getHeightShort() {
         return height;
     }
