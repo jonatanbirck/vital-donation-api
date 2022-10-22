@@ -13,9 +13,6 @@ pipeline {
             }
         }
         stage("Build Release") {
-            when {
-                branch "main"
-            }
             steps {
                 sh "echo 'Build Release'"
             }
