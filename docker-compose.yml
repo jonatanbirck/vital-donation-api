@@ -18,6 +18,7 @@ services:
   db:
     container_name: db
     image: postgres
+    user: "${UID}:${GID}"
     environment:
       POSTGRES_USER: "${DATABASE_USERNAME}"
       POSTGRES_PASSWORD: "${DATABASE_PASSWORD}"
