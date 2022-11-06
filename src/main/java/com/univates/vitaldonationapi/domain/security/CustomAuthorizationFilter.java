@@ -2,7 +2,6 @@ package com.univates.vitaldonationapi.domain.security;
 
 import com.univates.vitaldonationapi.domain.exception.GlobalExceptionHandler;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -20,7 +19,8 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws IOException, ServletException {
         try {
             if (!request.getServletPath().equals("/login")
-                    && (!request.getServletPath().equals("/api/users") || !request.getMethod().equals(HttpMethod.POST.name()))) {
+                    && (!request.getServletPath().equals("/api/users") || !request.getMethod().equals(HttpMethod.POST.name()))
+                    && !request.getServletPath().equals("/api/users/refresh-token")) {
                 SecurityContextHolder.getContext().setAuthentication(TokenManager.authenticateToken(request));
             }
         } catch (Exception e) {

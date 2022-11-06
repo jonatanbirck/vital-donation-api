@@ -99,7 +99,7 @@ public class User {
 
     public org.springframework.security.core.userdetails.User toUserAuth() {
         return new org.springframework.security.core.userdetails.User(
-            this.email, this.password, mapRolesToSimpleGrantedAuthority()
+            this.cpf, this.password, mapRolesToSimpleGrantedAuthority()
         );
     }
 

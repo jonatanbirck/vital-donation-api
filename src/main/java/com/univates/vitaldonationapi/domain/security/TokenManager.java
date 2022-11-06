@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.univates.vitaldonationapi.domain.exception.security.InvalidTokenException;
+import com.univates.vitaldonationapi.domain.services.UserService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,7 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
 
@@ -38,6 +41,20 @@ public abstract class TokenManager {
             "access_token", createAccessToken(request, user),
             "refresh_token", createRefreshToken(request, user)
         );
+    }
+
+    public static Map<String, String> refreshToken(HttpServletRequest request, UserService userService) {
+        String authenticationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+
+        if (authenticationHeader != null && authenticationHeader.startsWith("Bearer ")) {
+            String refreshToken = authenticationHeader.substring("Bearer ".length());
+            DecodedJWT decodedJWT = VERIFIER.verify(refreshToken);
+            String cpf = decodedJWT.getSubject();
+            User user = userService.findByCpf(cpf).toUserAuth();
+            return createTokens(request, user);
+        }
+
+        return null;
     }
 
     public static UsernamePasswordAuthenticationToken authenticateToken(HttpServletRequest request) {
