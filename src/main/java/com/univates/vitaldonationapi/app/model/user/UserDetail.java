@@ -1,15 +1,11 @@
 package com.univates.vitaldonationapi.app.model.user;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.univates.vitaldonationapi.domain.entity.Role;
 import com.univates.vitaldonationapi.domain.entity.User;
 import com.univates.vitaldonationapi.helper.ConverterHelper;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
@@ -20,8 +16,6 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class UserDetail {
 
     private UUID id;

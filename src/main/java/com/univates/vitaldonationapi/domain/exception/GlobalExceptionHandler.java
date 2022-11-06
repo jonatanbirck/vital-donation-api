@@ -1,9 +1,8 @@
 package com.univates.vitaldonationapi.domain.exception;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.univates.vitaldonationapi.domain.exception.model.UserAlreadyExistsException;
-import com.univates.vitaldonationapi.domain.exception.model.UserNotFoundException;
-import com.univates.vitaldonationapi.domain.exception.security.InvalidTokenException;
+import com.univates.vitaldonationapi.domain.exception.model.AlreadyExistsException;
+import com.univates.vitaldonationapi.domain.exception.model.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
@@ -62,15 +61,15 @@ public class GlobalExceptionHandler {
 
     @ResponseStatus(NOT_FOUND)
     @ResponseBody
-    @ExceptionHandler(UserNotFoundException.class)
-    public ApiExceptionDetail handleUserNotFoundException(UserNotFoundException e) {
+    @ExceptionHandler(NotFoundException.class)
+    public ApiExceptionDetail handleUserNotFoundException(NotFoundException e) {
         return new ApiExceptionDetail(NOT_FOUND, e.getMessage());
     }
 
     @ResponseStatus(BAD_REQUEST)
     @ResponseBody
-    @ExceptionHandler(UserAlreadyExistsException.class)
-    public ApiExceptionDetail handleUserNotFoundException(UserAlreadyExistsException e) {
+    @ExceptionHandler(AlreadyExistsException.class)
+    public ApiExceptionDetail handleUserNotFoundException(AlreadyExistsException e) {
         return new ApiExceptionDetail(BAD_REQUEST, e.getMessage());
     }
 

@@ -2,7 +2,6 @@ package com.univates.vitaldonationapi.app.model.user;
 
 import com.univates.vitaldonationapi.domain.entity.User;
 import com.univates.vitaldonationapi.helper.ConverterHelper;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
@@ -14,7 +13,6 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-@AllArgsConstructor
 public class UserForm {
 
     @NotBlank

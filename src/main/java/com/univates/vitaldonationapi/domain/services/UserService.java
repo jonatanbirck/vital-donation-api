@@ -1,8 +1,8 @@
 package com.univates.vitaldonationapi.domain.services;
 
 import com.univates.vitaldonationapi.domain.entity.User;
-import com.univates.vitaldonationapi.domain.exception.model.UserAlreadyExistsException;
-import com.univates.vitaldonationapi.domain.exception.model.UserNotFoundException;
+import com.univates.vitaldonationapi.domain.exception.model.AlreadyExistsException;
+import com.univates.vitaldonationapi.domain.exception.model.NotFoundException;
 import com.univates.vitaldonationapi.domain.repository.UserRepository;
 import com.univates.vitaldonationapi.helper.ConverterHelper;
 import com.univates.vitaldonationapi.helper.PropertyHelper;
@@ -19,24 +19,24 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-@AllArgsConstructor
 @Service
+@AllArgsConstructor
 public class UserService implements UserDetailsService {
 
-    private UserRepository userRepository;
-    private RoleService roleService;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserRepository userRepository;
+    private final RoleService roleService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public User findById(UUID id) {
-        return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+        return userRepository.findById(id).orElseThrow(NotFoundException::new);
     }
 
     public User findByName(String name) {
-        return userRepository.findByName(name).orElseThrow(UserNotFoundException::new);
+        return userRepository.findByName(name).orElseThrow(NotFoundException::new);
     }
 
     public User findByCpf(String cpf) {
-        return userRepository.findByCpf(ConverterHelper.maskCPF(cpf)).orElseThrow(UserNotFoundException::new);
+        return userRepository.findByCpf(ConverterHelper.maskCPF(cpf)).orElseThrow(NotFoundException::new);
     }
 
     public List<User> findAll() {
@@ -92,11 +92,12 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String cpf) throws UsernameNotFoundException {
         return userRepository.findByCpf(ConverterHelper.maskCPF(cpf)).map(UserAuthHelper::map)
-                .orElseThrow(() -> new UserNotFoundException("user not found"));
+                .orElseThrow(() -> new NotFoundException("user not found"));
     }
 
     private void verifyIfExists(String cpf) {
-        userRepository.findByCpf(ConverterHelper.maskCPF(cpf)).ifPresent(user -> {throw new UserAlreadyExistsException(user);});
+        userRepository.findByCpf(ConverterHelper.maskCPF(cpf))
+                .ifPresent(user -> {throw new AlreadyExistsException(user.getId());});
     }
 
 }

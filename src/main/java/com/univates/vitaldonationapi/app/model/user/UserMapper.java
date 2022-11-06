@@ -17,4 +17,6 @@ public interface UserMapper {
     @Mapping(target = "password", ignore = true)
     UserDetail map(User user);
 
+    UserSimpleDetail mapToUserSimpleDetail(User user);
+
 }
