@@ -29,7 +29,8 @@ public class VitalDonationApiApplication {
 								 QuestionService questionService,
 								 AnswerService answerService,
 								 FormService formService,
-								 CompletedFormService completedFormService) {
+								 CompletedFormService completedFormService,
+								 CompletedQuestionService completedQuestionService) {
 		return args -> {
 			//create Roles
 			var roleSuperAdmin = roleService.create(new Role("SUPER_USER"));
@@ -65,15 +66,61 @@ public class VitalDonationApiApplication {
 			var allQuestions = Set.of(question01, question02, question03, question04, question05, question06, question07, question08, question09, question10, question11, question12, question13, question14, question15);
 
 			//create Answers
-			allQuestions.forEach(question -> createAnswer(answerService, question, "Sim"));
-			allQuestions.forEach(question -> createAnswer(answerService, question, "Não"));
+			var answer01 = createAnswer(answerService, question01, "Sim");
+			var answer02 = createAnswer(answerService, question01, "Não");
+			var answer03 = createAnswer(answerService, question02, "Sim");
+			var answer04 = createAnswer(answerService, question02, "Não");
+			var answer05 = createAnswer(answerService, question03, "Sim");
+			var answer06 = createAnswer(answerService, question03, "Não");
+			var answer07 = createAnswer(answerService, question04, "Sim");
+			var answer08 = createAnswer(answerService, question04, "Não");
+			var answer09 = createAnswer(answerService, question05, "Sim");
+			var answer10 = createAnswer(answerService, question05, "Não");
+			var answer11 = createAnswer(answerService, question06, "Sim");
+			var answer12 = createAnswer(answerService, question06, "Não");
+			var answer13 = createAnswer(answerService, question07, "Sim");
+			var answer14 = createAnswer(answerService, question07, "Não");
+			var answer15 = createAnswer(answerService, question08, "Sim");
+			var answer16 = createAnswer(answerService, question08, "Não");
+			var answer17 = createAnswer(answerService, question09, "Sim");
+			var answer18 = createAnswer(answerService, question09, "Não");
+			var answer19 = createAnswer(answerService, question10, "Sim");
+			var answer20 = createAnswer(answerService, question10, "Não");
+			var answer21 = createAnswer(answerService, question11, "Sim");
+			var answer22 = createAnswer(answerService, question11, "Não");
+			var answer23 = createAnswer(answerService, question12, "Sim");
+			var answer24 = createAnswer(answerService, question12, "Não");
+			var answer25 = createAnswer(answerService, question13, "Sim");
+			var answer26 = createAnswer(answerService, question13, "Não");
+			var answer27 = createAnswer(answerService, question14, "Sim");
+			var answer28 = createAnswer(answerService, question14, "Não");
+			var answer29 = createAnswer(answerService, question15, "Sim");
+			var answer30 = createAnswer(answerService, question15, "Não");
 
 			//create Form
 			var form = createForm(formService, allQuestions);
 
 			//create Completed Form
-			var completedForm = createCompletedForm(completedFormService, form, user1);
+			var completedForm1 = createCompletedForm(completedFormService, form, user1);
+
+			//create Completed Questions
+			var completedQuestion01 = createCompletedQuestion(completedQuestionService, completedForm1, question01, answer01, "observation");
+			var completedQuestion02 = createCompletedQuestion(completedQuestionService, completedForm1, question02, answer04, "observation");
+			var completedQuestion03 = createCompletedQuestion(completedQuestionService, completedForm1, question03, answer05, "observation");
 		};
+	}
+
+	private static CompletedQuestion createCompletedQuestion(CompletedQuestionService completedQuestionService,
+															 CompletedForm completedForm,
+															 Question question,
+															 Answer answer,
+															 String observation) {
+		var completedQuestion = new CompletedQuestion();
+		completedQuestion.setCompletedForm(completedForm);
+		completedQuestion.setQuestion(question);
+		completedQuestion.setAnswer(answer);
+		completedQuestion.setObservation(observation);
+		return completedQuestionService.create(completedQuestion);
 	}
 
 	private static CompletedForm createCompletedForm(CompletedFormService completedFormService, Form form, User user) {
