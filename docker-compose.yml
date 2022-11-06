@@ -25,10 +25,14 @@ services:
     ports:
       - "${DATABASE_EXTERNAL_PORT}:5432"
     volumes:
-      - ./docker/volumes/data:/var/lib/postgresql/data
+      - pg_data_vital_donation:/var/lib/postgresql/data
     networks:
       - postgres-network
 
 networks:
   postgres-network:
     driver: bridge
+volumes:
+  pg_data_vital_donation:
+    external: true
+    name: pg_data_vital_donation
