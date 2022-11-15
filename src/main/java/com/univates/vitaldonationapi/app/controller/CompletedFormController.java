@@ -3,10 +3,6 @@ package com.univates.vitaldonationapi.app.controller;
 import com.univates.vitaldonationapi.app.model.completed.form.CompletedFormDetail;
 import com.univates.vitaldonationapi.app.model.completed.form.CompletedFormForm;
 import com.univates.vitaldonationapi.app.model.completed.form.CompletedFormMapper;
-import com.univates.vitaldonationapi.app.model.form.FormDetail;
-import com.univates.vitaldonationapi.app.model.form.FormForm;
-import com.univates.vitaldonationapi.app.model.form.FormSimpleDetail;
-import com.univates.vitaldonationapi.app.model.form.InFormDetail;
 import com.univates.vitaldonationapi.domain.services.CompletedFormService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +28,12 @@ public class CompletedFormController {
     @GetMapping
     public ResponseEntity<List<CompletedFormDetail>> findAll() {
         return ResponseEntity.ok(completedFormService.findAll().stream().map(completedFormMapper::map).toList());
+    }
+
+    @PreAuthorize(PROFILE_USER)
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<CompletedFormDetail>> findByUserId(@PathVariable String id) {
+        return ResponseEntity.ok(completedFormService.findByUserId(UUID.fromString(id)).stream().map(completedFormMapper::map).toList());
     }
 
     @PreAuthorize(PROFILE_USER)

@@ -12,6 +12,7 @@ import java.util.UUID;
 public class FormDetail {
 
     private UUID id;
+    private String name;
     private Set<QuestionDetail> questions;
 
 }

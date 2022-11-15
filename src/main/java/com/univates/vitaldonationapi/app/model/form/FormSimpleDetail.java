@@ -9,4 +9,5 @@ import java.util.UUID;
 @Getter
 public class FormSimpleDetail {
     private UUID id;
+    private String name;
 }

@@ -115,7 +115,7 @@ public class Runner implements ApplicationRunner {
         var answer30 = createAnswer(question15, "Não");
 
         //create Form
-        var form = createForm(allQuestions);
+        var form = createForm("Formulário básico", allQuestions);
 
         //create Completed Form
         var completedForm1 = createCompletedForm(form, user1);
@@ -308,8 +308,9 @@ public class Runner implements ApplicationRunner {
         return completedFormService.save(completedForm);
     }
 
-    private Form createForm(Set<Question> questions) {
+    private Form createForm(String name, Set<Question> questions) {
         var form = new Form();
+        form.setName(name);
         form.setQuestions(questions);
         return formService.save(form);
     }

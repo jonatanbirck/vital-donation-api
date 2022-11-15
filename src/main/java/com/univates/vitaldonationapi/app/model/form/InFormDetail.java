@@ -13,6 +13,8 @@ public class InFormDetail {
 
     private UUID id;
 
+    private String name;
+
     @NotEmpty
     private Set<UUID> questionIds;
 

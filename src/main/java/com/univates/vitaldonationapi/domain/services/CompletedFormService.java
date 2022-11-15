@@ -23,6 +23,10 @@ public class CompletedFormService {
         return completedFormRepository.findById(id).orElseThrow(NotFoundException::new);
     }
 
+    public List<CompletedForm> findByUserId(UUID id) {
+        return completedFormRepository.findByUserId(id);
+    }
+
     public CompletedForm save(CompletedForm form) {
         return completedFormRepository.save(form);
     }

@@ -3,7 +3,9 @@ package com.univates.vitaldonationapi.domain.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -17,6 +19,8 @@ public class Form {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(updatable = false, unique = true, nullable = false)
     private UUID id;
+
+    private String name;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
