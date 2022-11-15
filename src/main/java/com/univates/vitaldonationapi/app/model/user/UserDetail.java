@@ -2,8 +2,9 @@ package com.univates.vitaldonationapi.app.model.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.univates.vitaldonationapi.app.model.donation.DonationDetail;
+import com.univates.vitaldonationapi.domain.common.BloodType;
 import com.univates.vitaldonationapi.domain.entity.Role;
-import com.univates.vitaldonationapi.domain.entity.User;
 import com.univates.vitaldonationapi.helper.ConverterHelper;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import org.hibernate.validator.constraints.Length;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -42,9 +44,11 @@ public class UserDetail {
 
     private LocalDate birthdate;
 
-    private User.BloodType bloodType;
+    private BloodType bloodType;
 
     private Collection<Role> roles;
+
+    private Set<DonationDetail> donations;
 
     @JsonIgnore
     public Integer getWeightInteger() {

@@ -1,6 +1,6 @@
 package com.univates.vitaldonationapi.app.model.user;
 
-import com.univates.vitaldonationapi.domain.entity.User;
+import com.univates.vitaldonationapi.domain.common.BloodType;
 import com.univates.vitaldonationapi.helper.ConverterHelper;
 import lombok.Getter;
 import lombok.Setter;
@@ -41,7 +41,7 @@ public class UserForm {
 
     private LocalDate birthdate;
 
-    private User.BloodType bloodType;
+    private BloodType bloodType;
 
     public void setCpf(String cpf) {
         this.cpf = ConverterHelper.maskCPF(cpf);

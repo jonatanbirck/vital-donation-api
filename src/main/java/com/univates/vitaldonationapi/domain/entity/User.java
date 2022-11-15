@@ -1,16 +1,17 @@
 package com.univates.vitaldonationapi.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.univates.vitaldonationapi.domain.common.BloodType;
 import com.univates.vitaldonationapi.helper.ConverterHelper;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @Setter
@@ -66,36 +67,8 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();
 
-    @OneToMany(mappedBy = "donor", targetEntity = Donation.class)
-    private Collection<Donation> donations = new ArrayList<>();
-
-    @Getter
-    @AllArgsConstructor
-    public enum BloodType {
-        @JsonProperty("A+")
-        AP,
-
-        @JsonProperty("B+")
-        BP,
-
-        @JsonProperty("AB+")
-        ABP,
-
-        @JsonProperty("O+")
-        OP,
-
-        @JsonProperty("A-")
-        AN,
-
-        @JsonProperty("B-")
-        BN,
-
-        @JsonProperty("AB-")
-        ABN,
-
-        @JsonProperty("O-")
-        ON;
-    }
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "donor", targetEntity = Donation.class)
+    private Set<Donation> donations = new HashSet<>();
 
     public org.springframework.security.core.userdetails.User toUserAuth() {
         return new org.springframework.security.core.userdetails.User(

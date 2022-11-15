@@ -1,5 +1,6 @@
 package com.univates.vitaldonationapi.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,18 +27,19 @@ public class Donation {
     @JoinColumn(referencedColumnName = "id")
     private User donor;
 
-    @Column(nullable = false)
-    protected LocalDateTime createAt;
-
     @ManyToOne
     @JoinColumn(referencedColumnName = "id")
-    protected User createBy;
+    private Hemocenter hemocenter;
 
-    @Column
-    protected LocalDateTime updateAt;
+    private Status status = Status.SCHEDULED;
 
-    @ManyToOne
-    @JoinColumn(referencedColumnName = "id")
-    protected User updateBy;
+    public enum Status {
+        @JsonProperty("Agendado")
+        SCHEDULED,
+        @JsonProperty("Cancelado")
+        CANCELED,
+        @JsonProperty("Realizado")
+        DONE
+    }
 
 }
